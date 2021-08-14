@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 
 import CustomDonationInput from 'components/Donate/CustomDonationInput';
 import StripeTestCards from 'components/Donate/StripeTestCards';
@@ -6,7 +6,7 @@ import StripeTestCards from 'components/Donate/StripeTestCards';
 import getStripe from 'utils/get-stripejs';
 import { fetchPostJSON } from 'utils/api-helpers';
 import { formatAmountForDisplay } from 'utils/stripe-helpers';
-import * as config from './config';
+import * as config from '../config';
 
 const CheckoutForm = () => {
    const [loading, setLoading] = useState(false);
@@ -14,17 +14,17 @@ const CheckoutForm = () => {
       customDonation: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP)
    });
 
-   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = e =>
+   const handleInputChange: ChangeEventHandler<HTMLInputElement> = e =>
       setInput({
          ...input,
          [e.currentTarget.name]: e.currentTarget.value
       });
 
-   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
+   const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
       e.preventDefault();
       setLoading(true);
       // Create a Checkout Session.
-      const response = await fetchPostJSON('/api/checkout_sessions', {
+      const response = await fetchPostJSON('/api/checkout/session', {
          amount: input.customDonation
       });
 

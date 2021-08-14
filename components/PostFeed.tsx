@@ -26,7 +26,12 @@ function PostItem({ post, admin = false }) {
                   <strong>@{post.username}</strong>
                </a>
             </Link>
-            <span className="push-left">💗 {post.heartCount || 0} Hearts</span>
+            <div>
+               <span>💗 {post.heartCount || 0} Recruit</span>
+               <span>✊🏼 {post.heartCount || 0} Supporters</span>
+               <span>👊🏼 {post.heartCount || 0} Opponents</span>
+               <span>💸 {post.heartCount || 0} Donations</span>
+            </div>
          </footer>
 
          {/* If admin view, show extra controls for user */}
