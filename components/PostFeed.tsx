@@ -29,9 +29,9 @@ function PostItem({ post, admin = false }) {
 
             <div className="flex justify-between mt-2">
                <span>💗 {post.heartCount || 0} Why not?</span>
-               <span>✊🏼 {post.heartCount || 0} Supporters</span>
-               <span>👊🏼 {post.heartCount || 0} Opponents</span>
-               <span>💸 {post.heartCount || 0} Donations</span>
+               <span>✊🏼 {post.supportCount || 0} Supporters</span>
+               <span>👊🏼 {post.opponentCount || 0} Opponents</span>
+               <span>💸 {post.donateCount || 0} Donations</span>
             </div>
          </footer>
 

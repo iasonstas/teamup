@@ -12,11 +12,7 @@ export async function getStaticProps({ params }) {
    const { username, slug } = params;
    const userDoc = await getUserWithUsername(username);
 
-   if (!userDoc) {
-      return {
-         notFound: true
-      };
-   }
+   if (!userDoc) return { notFound: true };
 
    let post: IPost;
    let path = null;
@@ -80,7 +76,9 @@ export default function Post(props) {
                }
             >
                <ReactionButton reaction={'heart'} postRef={postRef} />
-               <ReactionButton reaction={'fake'} postRef={postRef} />
+               <ReactionButton reaction={'support'} postRef={postRef} />
+               <ReactionButton reaction={'opponent'} postRef={postRef} />
+               <ReactionButton reaction={'donate'} postRef={postRef} />
             </AuthCheck>
          </aside>
       </main>

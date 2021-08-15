@@ -1,7 +1,10 @@
 import { firestore, auth, increment } from 'shared/firebase';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import { useDocument, useDocumentData } from 'react-firebase-hooks/firestore';
+import { useRouter } from 'next/router';
 
 export default function ReactionButton({ postRef, reaction }) {
+   console.log('🌊 ~ file: ReactionButton.jsx ~ line 6 ~ ReactionButton ~ postRef', useDocumentData(postRef));
+   const router = useRouter();
    // Listen to heart document for currently logged in user
    const reactionRef = postRef.collection(reaction).doc(auth.currentUser.uid);
    const [reactionDoc] = useDocument(reactionRef);
@@ -10,6 +13,7 @@ export default function ReactionButton({ postRef, reaction }) {
    // Create a user-to-post relationship
    const addReaction = async () => {
       const uid = auth.currentUser.uid;
+      if (reaction === 'donate') donate(uid);
       const batch = firestore.batch();
       batch.update(postRef, { [count]: increment(1) });
       batch.set(reactionRef, { uid });
@@ -22,6 +26,10 @@ export default function ReactionButton({ postRef, reaction }) {
       batch.update(postRef, { [count]: increment(-1) });
       batch.delete(reactionRef);
       await batch.commit();
+   };
+
+   const donate = uid => {
+      router.push(`/donate/${uid}`);
    };
 
    // if the doc exist we know we have already a reaction
