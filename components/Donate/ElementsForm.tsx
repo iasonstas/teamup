@@ -1,6 +1,5 @@
 import CustomDonationInput from 'components/Donate/CustomDonationInput';
-import StripeTestCards from 'components/Donate/StripeTestCards';
-import PrintObject from 'components/Donate/PrintObject';
+import PrintObject from 'utils/PrintObject';
 
 import { fetchPostJSON } from 'utils/api-helpers';
 import { formatAmountForDisplay } from 'utils/stripe-helpers';
@@ -9,29 +8,7 @@ import * as config from 'components/config';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 
-const CARD_OPTIONS = {
-   iconStyle: 'solid' as const,
-   style: {
-      base: {
-         iconColor: '#6772e5',
-         color: '#6772e5',
-         fontWeight: '500',
-         fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-         fontSize: '16px',
-         fontSmoothing: 'antialiased',
-         ':-webkit-autofill': {
-            color: '#fce883'
-         },
-         '::placeholder': {
-            color: '#6772e5'
-         }
-      },
-      invalid: {
-         iconColor: '#ef2961',
-         color: '#ef2961'
-      }
-   }
-};
+import styles from 'styles/Donate.module.scss';
 
 const ElementsForm = () => {
    const [input, setInput] = useState({
@@ -49,21 +26,17 @@ const ElementsForm = () => {
          case 'requires_payment_method':
          case 'requires_confirmation':
             return <h2>Processing...</h2>;
-
          case 'requires_action':
             return <h2>Authenticating...</h2>;
-
          case 'succeeded':
             return <h2>Payment Succeeded 🥳</h2>;
-
          case 'error':
             return (
                <>
                   <h2>Error 😭</h2>
-                  <p className="error-message">{errorMessage}</p>
+                  <p className={styles.errorMessage}>{errorMessage}</p>
                </>
             );
-
          default:
             return null;
       }
@@ -117,9 +90,9 @@ const ElementsForm = () => {
 
    return (
       <>
-         <form onSubmit={handleSubmit}>
+         <form onSubmit={handleSubmit} className=" w-2/3 mx-auto">
             <CustomDonationInput
-               className="elements-style"
+               className={`${styles.elements} ${styles.FormRow}`}
                name="customDonation"
                value={input.customDonation}
                min={config.MIN_AMOUNT}
@@ -129,17 +102,17 @@ const ElementsForm = () => {
                onChange={handleInputChange}
             />
             <StripeTestCards />
-            <fieldset className="elements-style">
+            <fieldset className={styles.elements}>
                <legend>Your payment details:</legend>
                <input
                   placeholder="Cardholder name"
-                  className="elements-style"
+                  className={`${styles.elements} ${styles.FormRow}`}
                   type="Text"
                   name="cardholderName"
                   onChange={handleInputChange}
                   required
                />
-               <div className="FormRow elements-style">
+               <div className={`${styles.elements} ${styles.FormRow}`}>
                   <CardElement
                      options={CARD_OPTIONS}
                      onChange={e => {
@@ -152,7 +125,7 @@ const ElementsForm = () => {
                </div>
             </fieldset>
             <button
-               className="elements-style-background"
+               className={`${styles.elementsBackground} ${styles.buttonDonate} `}
                type="submit"
                disabled={!['initial', 'succeeded', 'error'].includes(payment.status) || !stripe}
             >
@@ -166,3 +139,43 @@ const ElementsForm = () => {
 };
 
 export default ElementsForm;
+
+const StripeTestCards = () => {
+   return (
+      <div className={styles.testCardNotice}>
+         Use any of the{' '}
+         <a href="https://stripe.com/docs/testing#cards" target="_blank" rel="noopener noreferrer">
+            Stripe test cards
+         </a>{' '}
+         for this demo, e.g.{' '}
+         <div className={styles.cardNumber}>
+            4242<span></span>4242<span></span>4242<span></span>4242
+         </div>
+         .
+      </div>
+   );
+};
+
+const CARD_OPTIONS = {
+   iconStyle: 'solid' as const,
+   style: {
+      base: {
+         iconColor: '#6772e5',
+         color: '#6772e5',
+         fontWeight: '500',
+         fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+         fontSize: '16px',
+         fontSmoothing: 'antialiased',
+         ':-webkit-autofill': {
+            color: '#fce883'
+         },
+         '::placeholder': {
+            color: '#6772e5'
+         }
+      },
+      invalid: {
+         iconColor: '#ef2961',
+         color: '#ef2961'
+      }
+   }
+};

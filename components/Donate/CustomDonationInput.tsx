@@ -16,25 +16,34 @@ const CustomDonationInput = ({ name, value, min, max, currency, step, onChange, 
    <label>
       Custom donation amount ({formatAmountForDisplay(min, currency)}-{formatAmountForDisplay(max, currency)}
       ):
-      <input
-         className={className}
-         type="number"
-         name={name}
-         value={value}
-         min={min}
-         max={max}
-         step={step}
-         onChange={onChange}
-      ></input>
-      <input
-         type="range"
-         name={name}
-         value={value}
-         min={min}
-         max={max}
-         step={step}
-         onChange={onChange}
-      ></input>
+      {/* <div className="flex"> */}
+      <div className="flex-col">
+         <input
+            className={className}
+            type="number"
+            name={name}
+            value={value}
+            min={min}
+            max={max}
+            step={step}
+            onChange={onChange}
+         ></input>
+         <input
+            type="range"
+            name={name}
+            value={value}
+            min={min}
+            max={max}
+            step={step}
+            onChange={onChange}
+         ></input>
+      </div>
+      {/* <div className="flex justify-around w-6/12">
+         <button value={5}>5</button>
+         <button value={20}>20</button>
+         <button value={5}>50</button>
+      </div> */}
+      {/* </div> */}
    </label>
 );
 

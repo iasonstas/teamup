@@ -7,9 +7,8 @@ import ElementsForm from 'components/Donate/ElementsForm';
 
 const DonatePage: NextPage = () => {
    return (
-      <div className="page-container">
-         <h1>Donate with Elements</h1>
-         <p>Donate to our project 💖</p>
+      <div className="container flex-col items-center">
+         <h1 className="text-center">Donate to your selected project 💖</h1>
          <Elements stripe={getStripe()}>
             <ElementsForm />
          </Elements>

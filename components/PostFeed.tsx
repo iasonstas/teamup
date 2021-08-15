@@ -17,17 +17,18 @@ function PostItem({ post, admin = false }) {
             </h2>
          </Link>
 
-         <footer>
+         <footer className="flex-col ">
             <span>
                {wordCount} words. {minutesToRead} min read written by
+               <Link href={`/${post.username}`}>
+                  <a className="ml-1">
+                     <strong>@{post.username}</strong>
+                  </a>
+               </Link>
             </span>
-            <Link href={`/${post.username}`}>
-               <a className="ml-2">
-                  <strong>@{post.username}</strong>
-               </a>
-            </Link>
-            <div>
-               <span>💗 {post.heartCount || 0} Recruit</span>
+
+            <div className="flex justify-between mt-2">
+               <span>💗 {post.heartCount || 0} Why not?</span>
                <span>✊🏼 {post.heartCount || 0} Supporters</span>
                <span>👊🏼 {post.heartCount || 0} Opponents</span>
                <span>💸 {post.heartCount || 0} Donations</span>
